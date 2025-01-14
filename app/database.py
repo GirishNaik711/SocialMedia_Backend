@@ -7,20 +7,8 @@ import time
 from .config import settings
 import os
 
-# SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}'
+SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}'
 
-# SQLALCHEMY_DATABASE_URL = os.getenv(
-#     "DATABASE_URL",
-#     f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}'
-# )
-
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-SQLALCHEMY_DATABASE_URL = DATABASE_URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
