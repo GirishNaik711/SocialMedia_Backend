@@ -28,7 +28,7 @@ def get_db():
 
 while True:
     try:
-        conn = psycopg2.connect(settings.database_url, cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(SQLALCHEMY_DATABASE_URL, cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("Database connection established")
         break
