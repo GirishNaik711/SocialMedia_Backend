@@ -46,6 +46,10 @@ jobs:
           python-version: '3.12'
       - name: upgrade pip
         run: python -m pip install --upgrade pip
+      - name: setup tools
+        run: pip install setuptools==68.0.0
+      - name: wheel
+        run: pip install wheel  
       - name: install all dependencies
         run: pip install -r requirements.txt
       - name: run tests with pytest
