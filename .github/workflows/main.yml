@@ -10,7 +10,7 @@ on:
 
 jobs:
   job1:
-    enviornment:
+    environment:
       name: testing
     env:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
