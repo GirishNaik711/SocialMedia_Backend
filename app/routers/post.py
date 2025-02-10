@@ -24,7 +24,7 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
     models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
 
     formatted_posts = [
-        {"Post": post, "Votes": votes} for post, votes in results
+        {"Post": post, "Votes": votes} for post, votes in posts
     ]
 
     return formatted_posts

@@ -1,5 +1,6 @@
 #create env by : venv\Scripts\activate.bat
-#13.19.00
+# 
+
 from fastapi import FastAPI
 from . import models
 from .database import engine 
@@ -48,4 +49,4 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"Hello": "World!!"}
+    return {"Hello": "waddup!!"}

@@ -26,12 +26,12 @@ def get_db():
         db.close()
 
 
-while True:
-    try:
-        conn = psycopg2.connect(SQLALCHEMY_DATABASE_URL, cursor_factory=RealDictCursor)
-        cursor = conn.cursor()
-        print("Database connection established")
-        break
-    except Exception as error:
-        print(f"The error '{error}' occurred")
-        time.sleep(2)
+# while True:
+#     try:
+#         conn = psycopg2.connect(SQLALCHEMY_DATABASE_URL, cursor_factory=RealDictCursor)
+#         cursor = conn.cursor()
+#         print("Database connection established")
+#         break
+#     except Exception as error:
+#         print(f"The error '{error}' occurred")
+#         time.sleep(2)
