@@ -43,15 +43,15 @@ jobs:
       - name: installing python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.12'
+          python-version: '3.9'
       - name: upgrade pip
         run: python -m pip install --upgrade pip
       - name: setup tools
         run: pip install setuptools==68.0.0
       - name: wheel
         run: pip install wheel 
-      - name: upgrade setuptools
-        run: pip install --upgrade setuptools
+      - name: upgrade setuptools and wheel
+        run: pip install --upgrade pip setuptools wheel
       - name: upgrade pip
         run: pip install --upgrade pip
       - name: install all dependencies
