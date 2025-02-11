@@ -49,7 +49,11 @@ jobs:
       - name: setup tools
         run: pip install setuptools==68.0.0
       - name: wheel
-        run: pip install wheel  
+        run: pip install wheel 
+      - name: upgrade setuptools
+        run: pip install --upgrade setuptools
+      - name: upgrade pip
+        run: pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt
       - name: run tests with pytest
