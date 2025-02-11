@@ -49,4 +49,4 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"Hello": "waddup!!"}
+    return {"Hello": "waddup!!, deployed from heroku pipeline"}
