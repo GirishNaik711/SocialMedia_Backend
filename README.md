@@ -20,7 +20,7 @@ pip install -r requirements-dev.txt
 
 ## Config
 
-Copy `.env.example` to `.env` and fill it in. The app reads these from the environment or from `.env`:
+Copy `.env.example` to `.env` and replace the `change-me` values. The app reads these from the environment or from `.env`:
 
 | Variable | Purpose |
 |---|---|
@@ -83,7 +83,9 @@ pytest
 
 ## Deployment
 
-GitHub Actions (`.github/workflows/main.yml`) runs the tests on every push and pull request. Pushes to `main` then deploy over SSH: `git pull` and `systemctl restart app` in `~/app/src` on the server. It needs these repository secrets: the eight config variables above (`DATABASE_HOSTNAME` should be `localhost` for the CI Postgres service) plus `PROD_HOST`, `PROD_USERNAME`, `PROD_PASSWORD`.
+GitHub Actions (`.github/workflows/main.yml`) runs the tests on every push and pull request against a throwaway Postgres container. No secrets are needed for that.
+
+The deploy job is off by default. To turn it on, set the repository variable `DEPLOY_ENABLED` to `true` and add the secrets `PROD_HOST`, `PROD_USERNAME` and `PROD_PASSWORD`. A push to `main` then deploys over SSH: `git pull` and `systemctl restart app` in `~/app/src` on the server.
 
 Other files:
 
@@ -98,5 +100,7 @@ The server deploy does not install dependencies or run `alembic upgrade head`. D
 
 - CORS only allows `https://www.google.com`. Change `origins` in `app/main.py` for a real frontend.
 - `GET /users/{id}` needs no login.
+- The `published` flag is stored but not enforced: any logged-in user can read unpublished posts.
+- No rate limiting on `/login`.
 - `app/calculations.py` is leftover pytest practice code and nothing in the API uses it.
 - Startup logs `error reading bcrypt version` from passlib. It is harmless.
