@@ -1,6 +1,6 @@
 from .. import models, schemas
 from fastapi import Response, status, HTTPException, Depends, APIRouter, Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from sqlalchemy import func
 from ..database import get_db
 from typing import List
@@ -15,13 +15,14 @@ router = APIRouter(
 
 def posts_with_votes(db: Session):
     return db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
-        models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id)
+        models.Vote, models.Vote.post_id == models.Post.id, isouter=True).options(
+        selectinload(models.Post.owner)).group_by(models.Post.id)
 
 
 @router.get("/", response_model=List[schemas.PostOut])
 def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user),
               limit: int = Query(10, ge=1, le=100), skip: int = Query(0, ge=0), search: Optional[str] = ""):
-    posts = posts_with_votes(db).filter(models.Post.title.contains(search)).order_by(models.Post.id).limit(limit).offset(skip).all()
+    posts = posts_with_votes(db).filter(models.Post.title.contains(search, autoescape=True)).order_by(models.Post.id).limit(limit).offset(skip).all()
 
     return [{"Post": post, "Votes": votes} for post, votes in posts]
 

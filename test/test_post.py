@@ -17,6 +17,13 @@ def test_get_all_posts_search(authorized_client, test_post):
     assert [p["Post"]["title"] for p in res.json()] == ["test title2"]
 
 
+def test_get_all_posts_search_wildcard_is_literal(authorized_client, test_post):
+    res = authorized_client.get("/posts/", params={"search": "%"})
+
+    assert res.status_code == 200
+    assert res.json() == []
+
+
 def test_get_all_posts_limit_and_skip(authorized_client, test_post):
     res = authorized_client.get("/posts/", params={"limit": 2, "skip": 1})
 
