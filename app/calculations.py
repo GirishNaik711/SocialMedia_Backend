@@ -21,4 +21,4 @@ class BankAccount():
         self.balance -= amount
     
     def collect_interest(self, interest_rate):
-        self.balance *= 1.1
+        self.balance *= 1 + interest_rate
